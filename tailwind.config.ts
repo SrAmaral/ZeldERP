@@ -1,7 +1,7 @@
+import { default as typography } from "@tailwindcss/typography";
+import daisyui from "daisyui";
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
-import daisyui from "daisyui";
-import { default as typography } from "@tailwindcss/typography";
 export default {
   content: ["./src/**/*.tsx"],
   theme: {
