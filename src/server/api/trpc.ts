@@ -8,6 +8,7 @@
  */
 
 import { initTRPC, TRPCError } from "@trpc/server";
+import { enhance } from "@zenstackhq/runtime";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
@@ -28,9 +29,10 @@ import { db } from "~/server/db";
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const session = await getServerAuthSession();
-
+  const dbe = enhance(db, { user: session?.user });
   return {
     db,
+    dbe,
     session,
     ...opts,
   };

@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
+    // Further reading:
+    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
+    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+    url      = env("DATABASE_URL")
+}
+
+plugin zod {
+  provider = '@core/zod'
+}
+
+model Post {
+    id        Int      @id @default(autoincrement())
+    name      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([name])
+      @@allow('all',has(auth().role,'admin'))
+
+}
+
+model User {
+    id       String  @id @default(cuid())
+    name     String?
+    password String?
+    email         String?   @unique
+    emailVerified DateTime?
+}
+
+model SystemUser {
+    id            String    @id @default(cuid())
+    name          String?
+    email         String?   @unique
+    password      String?
+    emailVerified DateTime?
+    image         String?
+    role          String[]
+
+    @@auth
+    @@allow('all',true)
+}
+
+model Client {
+    id              Int       @id @default(autoincrement())
+    fantasyName     String?
+    companyName     String
+    cnpj            String
+    cnaeDescription String?
+    cnaeCode        String?
+    openingDate     String?
+    address         Json?
+    contactNumber   String?
+    contactEmail    String?
+    createdAt       DateTime? @default(now())
+    updatedAt       DateTime? @updatedAt
+    contacts        Json?
+    @@allow('all',has(auth().role,'admin'))
+}
