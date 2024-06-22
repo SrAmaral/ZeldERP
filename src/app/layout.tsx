@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="en" className={`${GeistSans.variable}`} data-theme="light">
       <body className="">
         <TRPCReactProvider>
           <div className="grid h-screen max-h-screen grid-rows-[min-content] grid-cols-7">
@@ -25,7 +25,7 @@ export default function RootLayout({
             <nav className="col-span-1">
               <Sidebar />
             </nav>
-            <main className="col-span-6 p-4">{children}</main>
+            <main className="col-span-6 p-12">{children}</main>
           </div>
         </TRPCReactProvider>
       </body>
